@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="لعبة المشنوق - Hangman Game بدعم اللغتين العربية والإنجليزية">
+    <meta name="theme-color" content="#6366f1">
+    <title>لعبة المشنوق | Hangman Game</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="logo">🎮 <span data-i18n="title">لعبة المشنوق</span></h1>
+                <div class="header-controls">
+                    <button id="themeToggle" class="btn-icon" title="تبديل المظهر">
+                        <span class="icon">🌙</span>
+                    </button>
+                    <select id="languageSelect" class="language-select">
+                        <option value="ar">العربية</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <div class="container">
+            <!-- Stats Bar -->
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <span class="stat-label" data-i18n="points">النقاط</span>
+                    <span class="stat-value" id="pointsDisplay">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label" data-i18n="level">المستوى</span>
+                    <span class="stat-value" id="levelDisplay">1</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label" data-i18n="streak">السلسلة</span>
+                    <span class="stat-value" id="streakDisplay">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label" data-i18n="hints">التلميحات</span>
+                    <span class="stat-value" id="hintsDisplay">0</span>
+                </div>
+            </div>
+
+            <!-- Game Area -->
+            <div class="game-area">
+                <!-- Hangman Drawing -->
+                <div class="hangman-container">
+                    <svg class="hangman-svg" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Gallows -->
+                        <line x1="20" y1="230" x2="150" y2="230" stroke="currentColor" stroke-width="4"/>
+                        <line x1="50" y1="230" x2="50" y2="20" stroke="currentColor" stroke-width="4"/>
+                        <line x1="50" y1="20" x2="130" y2="20" stroke="currentColor" stroke-width="4"/>
+                        <line x1="130" y1="20" x2="130" y2="50" stroke="currentColor" stroke-width="4"/>
+                        
+                        <!-- Head -->
+                        <circle id="head" cx="130" cy="70" r="20" stroke="currentColor" stroke-width="4" fill="none" style="display:none"/>
+                        
+                        <!-- Body -->
+                        <line id="body" x1="130" y1="90" x2="130" y2="150" stroke="currentColor" stroke-width="4" style="display:none"/>
+                        
+                        <!-- Left Arm -->
+                        <line id="leftArm" x1="130" y1="110" x2="100" y2="130" stroke="currentColor" stroke-width="4" style="display:none"/>
+                        
+                        <!-- Right Arm -->
+                        <line id="rightArm" x1="130" y1="110" x2="160" y2="130" stroke="currentColor" stroke-width="4" style="display:none"/>
+                        
+                        <!-- Left Leg -->
+                        <line id="leftLeg" x1="130" y1="150" x2="110" y2="190" stroke="currentColor" stroke-width="4" style="display:none"/>
+                        
+                        <!-- Right Leg -->
+                        <line id="rightLeg" x1="130" y1="150" x2="150" y2="190" stroke="currentColor" stroke-width="4" style="display:none"/>
+                    </svg>
+                </div>
+
+                <!-- Word Display -->
+                <div class="word-display">
+                    <div id="wordContainer" class="word-container">
+                        <!-- الكلمات ستظهر هنا -->
+                    </div>
+                    <div class="word-hint">
+                        <span data-i18n="hint">التلميح:</span>
+                        <span id="hintText" class="hint-text">-</span>
+                    </div>
+                </div>
+
+                <!-- Game Stats -->
+                <div class="game-stats">
+                    <div class="stat">
+                        <span data-i18n="wrong_guesses">التخمينات الخاطئة</span>
+                        <span id="wrongCount" class="wrong-count">0/6</span>
+                    </div>
+                    <div class="stat">
+                        <span data-i18n="guessed_letters">الأحرف المخمنة</span>
+                        <span id="guessedLetters" class="guessed-letters">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Letter Buttons -->
+            <div class="letters-section">
+                <h3 data-i18n="select_letter">اختر حرفاً</h3>
+                <div id="lettersContainer" class="letters-grid">
+                    <!-- الأحرف ستظهر هنا -->
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="actions">
+                <button id="newGameBtn" class="btn btn-primary" data-i18n="new_game">لعبة جديدة</button>
+                <button id="hintBtn" class="btn btn-secondary" data-i18n="use_hint">استخدم تلميح</button>
+                <button id="achievementsBtn" class="btn btn-secondary" data-i18n="achievements">الإنجازات</button>
+                <button id="settingsBtn" class="btn btn-secondary" data-i18n="settings">الإعدادات</button>
+            </div>
+
+            <!-- Game Messages -->
+            <div id="messageBox" class="message-box" style="display:none">
+                <div class="message-content">
+                    <p id="messageText"></p>
+                    <button class="btn btn-primary" id="messageBtn" data-i18n="continue">متابعة</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Achievements Modal -->
+    <div id="achievementsModal" class="modal" style="display:none">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 data-i18n="achievements">الإنجازات</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div id="achievementsList" class="achievements-list">
+                <!-- الإنجازات ستظهر هنا -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal" style="display:none">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 data-i18n="settings">الإعدادات</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="settings-body">
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="soundToggle" checked>
+                        <span data-i18n="sound_effects">المؤثرات الصوتية</span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="musicToggle" checked>
+                        <span data-i18n="background_music">الموسيقى الخلفية</span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="vibrationToggle" checked>
+                        <span data-i18n="vibration">الاهتزاز</span>
+                    </label>
+                </div>
+                <button id="resetDataBtn" class="btn btn-danger" data-i18n="reset_data">إعادة تعيين البيانات</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p data-i18n="made_with">تم صنعه بـ ❤️ بواسطة <a href="https://github.com/moon9io" target="_blank">moon9io</a></p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/i18n.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/achievements.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/ui.js"></script>
+</body>
+</html>

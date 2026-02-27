@@ -1,0 +1,104 @@
+{
+  "words": [
+    {
+      "word": "programming",
+      "hint": "Writing code"
+    },
+    {
+      "word": "computer",
+      "hint": "Electronic device"
+    },
+    {
+      "word": "internet",
+      "hint": "Global network"
+    },
+    {
+      "word": "application",
+      "hint": "Mobile app"
+    },
+    {
+      "word": "website",
+      "hint": "Web page"
+    },
+    {
+      "word": "database",
+      "hint": "Data storage"
+    },
+    {
+      "word": "server",
+      "hint": "Central computer"
+    },
+    {
+      "word": "encryption",
+      "hint": "Data protection"
+    },
+    {
+      "word": "interface",
+      "hint": "User display"
+    },
+    {
+      "word": "system",
+      "hint": "Set of components"
+    },
+    {
+      "word": "memory",
+      "hint": "Temporary storage"
+    },
+    {
+      "word": "processor",
+      "hint": "Computer brain"
+    },
+    {
+      "word": "monitor",
+      "hint": "Display screen"
+    },
+    {
+      "word": "keyboard",
+      "hint": "Input device"
+    },
+    {
+      "word": "mouse",
+      "hint": "Control device"
+    },
+    {
+      "word": "file",
+      "hint": "Digital document"
+    },
+    {
+      "word": "folder",
+      "hint": "File container"
+    },
+    {
+      "word": "backup",
+      "hint": "Data copy"
+    },
+    {
+      "word": "update",
+      "hint": "New version"
+    },
+    {
+      "word": "security",
+      "hint": "Protection system"
+    },
+    {
+      "word": "algorithm",
+      "hint": "Step by step procedure"
+    },
+    {
+      "word": "variable",
+      "hint": "Data container"
+    },
+    {
+      "word": "function",
+      "hint": "Reusable code block"
+    },
+    {
+      "word": "network",
+      "hint": "Connected computers"
+    },
+    {
+      "word": "software",
+      "hint": "Computer programs"
+    }
+  ]
+}
